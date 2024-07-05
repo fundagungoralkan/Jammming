@@ -25,6 +25,38 @@ const[playlistTracks,setPlaylistTrack]=useState([]);
 
 
 
+const search=useCallback((term) => {
+  Spotify.search(term).then(setSearchResults);
+},[]);
+
+
+
+const addTrack = useCallback(
+  (track) => {
+    if (playlistTracks.some((savedTrack) => savedTrack.id === track.id))
+      return;
+
+    setPlaylistTracks((prevTracks) => [...prevTracks, track]);
+  },
+  [playlistTracks]
+);
+
+
+
+
+
+const removeTrack = useCallback((track) => {
+  setPlaylistTracks((prevTracks) =>
+    prevTracks
+
+  )
+}
+
+)
+
+
+
+
 
 
 
