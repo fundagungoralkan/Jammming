@@ -47,24 +47,41 @@ const addTrack = useCallback(
 
 const removeTrack = useCallback((track) => {
   setPlaylistTracks((prevTracks) =>
-    prevTracks
-
-  )
-}
-
-)
+    prevTracks.filter((currentTrack) => currentTrack.id !== track.id)
+  );
+}, []);
 
 
-
-
+const updatePlaylistName = useCallback((name) => {
+  setPlaylistName(name);
+}, []);
 
 
 
+const savePlaylist = useCallback(() => {
+  const trackUris = playlistTracks.map((track) => track.uri);
+  Spotify.savePlaylist(playlistName, trackUris).then(() => {
+    setPlaylistName("New Playlist");
+    setPlaylistTracks([]);
+  });
+}, [playlistName, playlistTracks]);
 
 
   return (
-    <div className="App">
-     
+    <div>
+     <h1>Jammming</h1>
+     <div className="App">
+     <SearchBar  onSearch={search}/>
+     <div className="App-playlist">
+      <SearchResults searchResults={searchResults} onAdd={addTrack} />
+      <Playlist 
+      playlistName={playlistName}
+      playlistTracks={playlistTracks}
+      onNameChange={updatePlaylistName}
+      onSave={savePlaylist}
+      />
+     </div>
+     </div>
     </div>
   );
 }
